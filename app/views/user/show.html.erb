@@ -1,0 +1,14 @@
+
+<div>
+ <%= image_tag @user.get_profile_image(100,100) %>
+ <%= name %>
+ <%= user.name %>
+
+ <%= introduction %>
+ <%= user.introduction %>
+
+ <% unless user.guest_user? %>
+  <p><%= link_to "プロフィール編集", edit_user_path(user) %></p>
+ <% end %>
+</div>
+
