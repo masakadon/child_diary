@@ -1,2 +1,64 @@
-<h1>New#index</h1>
-<p>Find me in app/views/new/index.html.erb</p>
+<h2>会員情報</h2>
+<%= image_tag @user.get_profile_image(100,100) %>
+<table class="table">
+ <tbody>
+  <tr>
+   <th>name</th>
+   <th><%= @user.name %></th>
+  </tr>
+
+  <tr>
+   <th>introduction</th>
+   <th><%= @user.introduction %></th>
+  </tr>
+ </tbody>
+</table>
+
+ <% unless @user.guest_user? %>
+  <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+ <% end %>
+
+ <% if @user == current_user %>
+  <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+ <% end %>
+
+ <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
+
+
+<h2>新規投稿</h2>
+<%= form_with model: image do |f| %>
+  <h4>Title</h4>
+  <%= f.text_field :title %>
+  <h4>Photo</h4>
+  <%= f.file_field :image, accept: "image/*" %>
+  <h4>Opinion</h4>
+  <%= f.text_area :body %>
+  <%= f.submit 'Create Book' %>
+<% end %>
+
+
+<h2>投稿一覧</h2>
+<table class="table">
+ <thead>
+  <tr>
+   <th></th>
+   <th>タイトル</th>
+  </tr>
+ </thead>
+
+ <tbody>
+  <% @images.each do |image| %>
+   <tr>
+    <td>
+     <%= link_to user_path(image.user.id) do %>
+      <%= image_tag image.get_image %>
+     <% end %>
+    </td>
+    <td>
+     <%= link_to image.title, image_path(image) %>
+    </td>
+   </tr>
+  <% end %>
+ </tbody>
+</table>
+

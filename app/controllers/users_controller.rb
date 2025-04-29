@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_guest_user, only: [:edit]
-
+  before_action :set_user, :only => [:show, :destroy]
+  
   def show
     @user = User.find(params[:id])
+    @images = @user.images
+    @image = Image.new
   end
 
   def index
@@ -21,6 +24,13 @@ class UsersController < ApplicationController
 
   end
 
+  def destroy
+    @user = User.find(params[:id]) 
+    @user.destroy
+    flash[:notice] = 'ユーザーを削除しました。'
+    redirect_to root_path
+  end
+
   private
   
   def ensure_guest_user
@@ -31,6 +41,10 @@ class UsersController < ApplicationController
   end  
 
   def user_params
-    params.require(:user).permit(:name, :profile_image)
+    params.require(:user).permit(:name, :introduction, :email, :profile_image)
+  end
+
+  def set_user
+    @user = User.find_by(:id => params[:id])
   end
 end

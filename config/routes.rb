@@ -7,16 +7,16 @@ Rails.application.routes.draw do
   #   sessions: 'admin/sessions'
   # }
 
-  root to: 'homes#top'
-
-  devise_for :users, skip: [:passwords], controllers: {
+  devise_for :user, controllers: {
     registrations: "user/registrations",
     sessions: 'user/sessions'
   }
 
-  resources :images, only: [:new, :index, :show]
-  resources :users, only: [:show, :index, :edit, :update]
+  root to: 'homes#top'
   get "/home/about" => "homes#about", as: "about"
+  resources :images, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+  resources :users, only: [:show, :index, :edit, :update, :destroy]
+  
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
