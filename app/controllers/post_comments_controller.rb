@@ -5,7 +5,8 @@ class PostCommentsController < ApplicationController
     comment.user_id = current_user.id
     comment.save
     redirect_to image_path(image)
-
+  end
+  
   def destroy
     PostComment.find(params[:id]).destroy
     redirect_to image_path(params[:image_id])
