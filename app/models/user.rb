@@ -5,6 +5,7 @@ class User < ApplicationRecord
   :recoverable, :rememberable, :validatable
   
   has_many :images, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
   # has_many :posts, :dependent => :destroy
   # has_many :comments, :dependent => :destroy
   has_one_attached :profile_image
@@ -13,7 +14,14 @@ class User < ApplicationRecord
   validates :name, uniqueness: true, length: { in: 2..20 }
   validates :introduction, length: { maximum: 50 }
   
-  
+  def admin?
+    self.admin
+  end
+
+  def status
+    is_deleted ? '退会' : '有効'
+  end
+
   def get_profile_image(width,height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -34,5 +42,19 @@ class User < ApplicationRecord
   def guest_user?
     email == GUEST_USER_EMAIL
   end
+
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
+
+  
 
 end

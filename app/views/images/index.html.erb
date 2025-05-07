@@ -14,28 +14,32 @@
  </tbody>
 </table>
 
- <% unless @user.guest_user? %>
+ <% if !@user.guest_user? && @user == current_user %>
   <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
  <% end %>
-
  <% if @user == current_user %>
-  <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+  <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
  <% end %>
-
- <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
-
 
 <h2>新規投稿</h2>
-<%= form_with model: image do |f| %>
+<%= form_with model: @image do |f| %>
   <h4>Title</h4>
   <%= f.text_field :title %>
   <h4>Photo</h4>
   <%= f.file_field :image, accept: "image/*" %>
   <h4>Opinion</h4>
   <%= f.text_area :body %>
-  <%= f.submit 'Create Book' %>
+  <%= f.submit '投稿' %>
 <% end %>
 
+<% if @image.errors.any? %>
+ <%= @image.errors.count %>件のエラーが発生しました
+ <ul>
+  <% @image.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+ </ul>
+<% end %>
 
 <h2>投稿一覧</h2>
 <table class="table">
@@ -43,6 +47,7 @@
   <tr>
    <th></th>
    <th>タイトル</th>
+   <th>コメント数</th>
   </tr>
  </thead>
 
@@ -56,6 +61,9 @@
     </td>
     <td>
      <%= link_to image.title, image_path(image) %>
+    </td>
+    <td>
+     <%= link_to "#{image.post_comments.count} コメント", image_path(image.id) %>
     </td>
    </tr>
   <% end %>

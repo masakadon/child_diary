@@ -14,15 +14,15 @@
  </tbody>
 </table>
 
- <% unless @user.guest_user? %>
-  <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
- <% end %>
 
- <% if @user == current_user %>
+<% if !@user.guest_user? && @user == current_user %>
   <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
- <% end %>
+<% end %>
 
+<% if @user == current_user %>
  <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
+<% end %>
+
 
 
 <h2>新規投稿</h2>
@@ -33,31 +33,30 @@
   <%= f.file_field :image, accept: "image/*" %>
   <h4>Opinion</h4>
   <%= f.text_area :body %>
-  <%= f.submit 'Create Book' %>
+  <%= f.submit '投稿' %>
 <% end %>
 
-# <h2>投稿一覧</h2>
-#  <table class="table">
-#   <thead>
-#    <tr>
-#     <th></th>
-#     <th>Title</th>
-#     <th>Opinion</th>
-#     <th colespan="3"></th>
-#    </tr>
-#   </thead>
+<h2>投稿一覧</h2>
+ <table class="table">
+  <thead>
+   <tr>
+    <th>画像</th>
+    <th>タイトル</th>
+    <th colespan="2"></th>
+   </tr>
+  </thead>
 
-#   <tbody>
-#    <% @images.each do |image| %>
-#    <tr>
-#     <td>
-#      <%= link_to user_path(image.user) do %>
-#       <%= image_tag @user.get_profile_image(100,100) %>
-#      <% end %>
-#     </td>
-#     <td><%= link_to image.title, image_path(book.id) %></td>
-#     <td><%= image.body %></td>
-#    </tr>
-#    <% end %>
-#   </tbody>
-#  </table>
+  <tbody>
+   <% @images.each do |image| %>
+   <tr>
+    <td>
+     <%= link_to user_path(image.user) do %>
+      <%= image_tag @user.profile_image %> 
+     <% end %>
+    </td>
+    <td><%= link_to image.title, image_path(image.id) %></td>
+    <td><%= link_to "#{image.post_comments.count} コメント", image_path(image.id) %></td>
+   </tr>
+   <% end %>
+  </tbody>
+ </table>

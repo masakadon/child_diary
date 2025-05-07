@@ -17,6 +17,8 @@
          <%= link_to "Mypage", user_path(current_user.id) %>
        </li>
        <li>
+         <%= link_to "Images", images_path %>
+       <li>
          <%= link_to "Users",users_path %>
        <li>
          <%= link_to "Log out", destroy_user_session_path, method: :delete %>
@@ -38,6 +40,13 @@
      <% end %>
     </header>
     
-    <%= yield %>
+    <main>
+     <%= flash[:notice] %>
+        <div class="d-flex justify-content-center mb-2">
+          <%= render 'searches/form' %>
+        </div>
+      <%= yield %>
+    </main>
+    
   </body>
 </html>

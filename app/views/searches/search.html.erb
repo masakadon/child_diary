@@ -1,0 +1,7 @@
+<% if @model == 'user' %>
+	<h3>Users search for "<%= @content %>"</h3>
+  <%= render 'users/index', users: @records %>
+<% elsif @model == 'image' %>
+	<h3>Images search for "<%= @content %>"</h3>
+  <%= render 'images/index', images: @records %>
+<% end %>

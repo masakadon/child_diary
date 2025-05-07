@@ -14,24 +14,38 @@
  </tbody>
 </table>
 
- <% unless @user.guest_user? %>
+ <% if !@user.guest_user? && @user == current_user %>
   <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
  <% end %>
 
  <% if @user == current_user %>
-  <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+  <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
  <% end %>
 
- <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
 
 
 <h2>新規投稿</h2>
-<%= form_with model: image do |f| %>
+<%= form_with model: @image do |f| %>
   <h4>Title</h4>
   <%= f.text_field :title %>
   <h4>Photo</h4>
   <%= f.file_field :image, accept: "image/*" %>
   <h4>Opinion</h4>
   <%= f.text_area :body %>
-  <%= f.submit 'Create Book' %>
+  <%= f.submit '投稿' %>
 <% end %>
+
+<h2>会員一覧</h2>
+<table class="table">
+ 
+  
+ <tbody>
+  <% @users.each do |user| %>
+  <tr>
+   <td><%= image_tag user.get_profile_image(100,100) %></td>
+   <td><%= user.name %></td>
+   <td><%= link_to "Show", user_path(user) %></td>
+  </tr>
+  <% end %>
+ </tbody>
+</table>
