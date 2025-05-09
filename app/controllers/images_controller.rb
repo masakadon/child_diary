@@ -8,18 +8,22 @@ class ImagesController < ApplicationController
      flash[:notice] = "投稿に成功しました。"
      redirect_to image_path(@image.id)
     else
+     @user = current_user
+     @images = Image.all
+     @post_comment = PostComment.new
      render :index
     end
   end
   
   def index
+    # @image = Image.find(params[:id])
     # # if user_signed_in?
     # #   @images = Image.where(public: true).or(Image.where(user: current_user))
     # # else
     # #   @images = Image.where(public: true)
     # end
     @images = Image.all
-    image = Image.new
+    @image = Image.new
     @user = current_user
     @post_comment = PostComment.new 
   end
@@ -46,6 +50,7 @@ class ImagesController < ApplicationController
      flash[:notice] = "編集に成功しました"
      redirect_to image_path(@image.id)
     else
+      @user = current_user
       render :edit
     end
   end

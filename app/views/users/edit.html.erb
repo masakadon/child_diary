@@ -1,4 +1,13 @@
 <h2>会員情報</h2>
+<% if @user.errors.any? %>
+  <%= @user.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= image_tag @user.get_profile_image(100,100) %>
 <table class="table">
  <tbody>
@@ -31,6 +40,7 @@
   <%= f.text_area :body %>
   <%= f.submit '投稿' %>
 <% end %>
+
 
 <h2>プロフィール編集</h2>
 <%= form_with model: @user do |f| %>

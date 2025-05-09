@@ -1,4 +1,13 @@
 <h2>会員情報</h2>
+<% if @image.errors.any? %>
+  <%= @image.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @image.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= image_tag @user.get_profile_image(100,100) %>
 <table class="table">
  <tbody>
@@ -43,12 +52,15 @@
    <%= f.text_field :title %>
    <h4>Opinion</h4>
    <%= f.text_area :body %>
+
+   <div class="field">
+   <%= f.label :user, "公開する" %>
+   <%= f.check_box :public %>
+   </div>
+
    <%= f.submit 'Update Image' %>
 
    <%= link_to "Show", image_path(@image.id) %>|<%= link_to "Back", images_path %>
 <% end %>
 
-<div class="field">
-  <%= form.label :user, "公開する" %>
-  <%= form.check_box :public %>
-</div>
+

@@ -39,7 +39,7 @@
 <table class="table">
  <tbody>
   <tr>
-   <td><%= image_tag @user.get_profile_image(100,100) %><br />
+   <td><%= image_tag @image.image, size: "100x100" %><br />
     <%= link_to @image.user.name, user_path %>
    </td>
    <td>
