@@ -1,45 +1,4 @@
-<h2>会員情報</h2>
-<% if @user.errors.any? %>
-  <%= @user.errors.count %>件のエラーが発生しました
-  <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
 
-<%= image_tag @user.get_profile_image(100,100) %>
-<table class="table">
- <tbody>
-  <tr>
-   <th>name</th>
-   <th><%= @user.name %></th>
-  </tr>
-
-  <tr>
-   <th>introduction</th>
-   <th><%= @user.introduction %></th>
-  </tr>
- </tbody>
-</table>
-
-
- <% if @user == current_user %>
-  <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
- <% end %>
-
-
-
-<h2>新規投稿</h2>
-<%= form_with model: @image do |f| %>
-  <h4>Title</h4>
-  <%= f.text_field :title %>
-  <h4>Photo</h4>
-  <%= f.file_field :image, accept: "image/*" %>
-  <h4>Opinion</h4>
-  <%= f.text_area :body %>
-  <%= f.submit '投稿' %>
-<% end %>
 
 
 <h2>プロフィール編集</h2>

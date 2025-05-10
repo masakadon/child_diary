@@ -1,8 +1,8 @@
 class PostCommentsController < ApplicationController
   def create
     image = Image.find(params[:image_id])
-    comment = PostComment.new(post_comment_params)
-    comment.user_id = current_user.id
+    comment = current_user.post_comments.build(post_comment_params)
+    comment.image_id = image.id
     comment.save
     redirect_to image_path(image)
   end

@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :current_user!, [:show]
 
   def create
     @image = Image.new(image_params)
