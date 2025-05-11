@@ -1,0 +1,12 @@
+# <% @images.each do |image| %>
+#   <tr>
+#    <td>
+#     <%= link_to user_path(image.user.id) do %>
+#      <%= image_tag image.image, size: "100x100" %>
+#     <% end %>
+#    </td>
+#    <td>
+#     <%= link_to image.title, image_path(image) %>
+#    </td>
+#   </tr>
+# <% end %>

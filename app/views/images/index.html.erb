@@ -3,6 +3,8 @@
 </div>
 
 <%= render 'list', user: @user,image: @image %>
+# <%= render template: 'images/index', locals: { images: @records } %>
+
 
 <% if @image.errors.any? %>
  <%= @image.errors.count %>件のエラーが発生しました
