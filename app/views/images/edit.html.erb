@@ -1,4 +1,11 @@
-
+<% if @image.errors.any? %>
+ <%= @image.errors.count %>件のエラーが発生しました
+ <ul>
+  <% @image.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+ </ul>
+<% end %>
 
 <h1>編集</h1>
 <%= form_with model: @image do |f| %>

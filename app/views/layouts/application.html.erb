@@ -14,14 +14,14 @@
     <header>
      <% if user_signed_in? %>
        <li>
-         <%= link_to "Mypage", user_path(current_user.id) %>
+         <%= link_to "マイページ", user_path(current_user.id) %>
        </li>
        <li>
-         <%= link_to "Images", images_path %>
+         <%= link_to "画像一覧", images_path %>
        <li>
-         <%= link_to "Users",users_path %>
+         <%= link_to "ユーザ一覧",users_path %>
        <li>
-         <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
        </li>
        
      <% else %>
