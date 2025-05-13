@@ -12,7 +12,7 @@
 
    <% if @image.user == current_user %>
     <td><%= link_to "Edit", edit_image_path(@image) %></td>
-    <td><%= link_to "Destroy", image_path(@image), method: :delete, "data-confirm" => "Are you sure？", class: "destroy_image_id" %></td>
+    <td><%= link_to "Destroy", user_path(current_user.id), method: :delete, "data-confirm" => "Are you sure？", class: "destroy_image_id" %></td>
    <% end %>
   </tr>
  </tbody>

@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :show]
+  before_action :correct_user, only: [:edit, :update]
 
   def create
     @image = Image.new(image_params)
@@ -66,5 +67,12 @@ class ImagesController < ApplicationController
 
   def image_params
     params.require(:image).permit(:title, :image, :body, :public)
+  end
+
+  def correct_iamge_user
+    image = Image.find(params[:id])
+    unless image.user == current_user
+     redirect_to images_path, alert: '他人の投稿は編集できません' 
+    end
   end
 end

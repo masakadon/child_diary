@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit]
   before_action :set_user, :only => [:show, :destroy]
+  before_action :correct_user, only: [:edit, :update]
   
   def show
     @user = User.find(params[:id])
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "編集に成功しました"
-      redirect_to user_path(@user.id)
+      redirect_to image_path(@user.id)
     else
       render :edit
     end
@@ -59,5 +60,12 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(:id => params[:id])
+  end
+
+  def correct_user
+    user = User.find(params[:id])
+    if user != current_user
+     redirect_to user_path(user), alert: '他人のプロフィールは編集できません'
+    end
   end
 end
