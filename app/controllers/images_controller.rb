@@ -61,7 +61,7 @@ class ImagesController < ApplicationController
     user = image.user
     image.destroy
     flash[:notice] = "削除に成功しました"
-    redirect_to user_path
+    redirect_to user_path(user)
   end
   
   private
