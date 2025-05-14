@@ -60,7 +60,7 @@ class ImagesController < ApplicationController
     image = Image.find(params[:id])
     user = image.user
     image.destroy
-    flash[:notice] = "削除に成功しました"
+    flash[:notice] = "投稿を削除しました。"
     redirect_to user_path(user)
   end
   
