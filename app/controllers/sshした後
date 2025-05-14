@@ -1,0 +1,9 @@
+sshした後
+
+cd 自分のフォルダ
+sudo kill $(cat tmp/pids/puma.pid) # rails の停止
+git pull origin main
+bundle install --path vendor/bundle --without test development
+bundle exec rails assets:precompile RAILS_ENV=production
+bundle exec rails db:migrate RAILS_ENV=production
+rails s -e production # rails 起動
