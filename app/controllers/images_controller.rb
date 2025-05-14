@@ -24,8 +24,8 @@ class ImagesController < ApplicationController
     # #   @images = Image.where(public: true)
     # end
     @images = Image.all
+    @user = current_user 
     @image = Image.new
-    @user = current_user
     @post_comment = PostComment.new 
   end
 
