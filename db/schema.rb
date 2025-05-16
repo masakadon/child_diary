@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_05_06_103825) do
+ActiveRecord::Schema.define(version: 2025_05_15_133458) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -58,9 +58,7 @@ ActiveRecord::Schema.define(version: 2025_05_06_103825) do
     t.integer "user_id"
     t.string "title"
     t.text "body"
-    t.boolean "user"
     t.boolean "is_published"
-    t.boolean "public"
   end
 
   create_table "post_comments", force: :cascade do |t|

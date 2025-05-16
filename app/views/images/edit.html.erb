@@ -17,8 +17,8 @@
    <%= f.text_area :body %>
 
    <div class="field">
-   <%= f.label :user, "公開する" %>
-   <%= f.check_box :public %>
+   <%= f.label :is_published, "公開する" %>
+   <%= f.check_box :is_published, {}, true, false %>
    </div>
 
    <%= f.submit 'Update Image' %>

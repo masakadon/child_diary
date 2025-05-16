@@ -1,11 +1,12 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
+  before_action :set_user, only: [:show, :edit, :update]
+
   def index
     @users = User.order(:created_at)
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def edit
@@ -25,6 +26,10 @@ class Admin::UsersController < ApplicationController
     unless current_user&.admin?
       redirect_to root_path, alert: '権限がありません'
     end
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 
   def user_params

@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @user != current_user && !@user.is_public?
-      redirect_to root_path, alert: "このユーザーのプロフィールは非公開です。"
+      redirect_to users_path, alert: "このユーザーのプロフィールは非公開です。"
       return
     end
     @images = @user.images
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "編集に成功しました"
-      redirect_to image_path(@user.id)
+      redirect_to user_path(@user)
     else
       render :edit
     end
