@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center mb-2">
+ <%= render 'public/searches/form' %>
+</div>
+
+<%= render 'list', user: @user,image: @image %>
+
+
+
+<% if @image.errors.any? %>
+ <%= @image.errors.count %>件のエラーが発生しました
+ <ul>
+  <% @image.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+ </ul>
+<% end %>
+
+<h2>投稿一覧</h2>
+<table class="table">
+ <thead>
+  <tr>
+   <th></th>
+   <th>タイトル</th>
+   <th>コメント数</th>
+  </tr>
+ </thead>
+
+ <tbody>
+  <% @images.each do |image| %>
+   <tr>
+    <td>
+     <%= link_to user_path(image.user.id) do %>
+      <%= image_tag image.image, size: "100x100" %>
+     <% end %>
+    </td>
+    <td>
+     <%= link_to image.title, image_path(image) %>
+    </td>
+    <td>
+     <%= link_to "#{image.post_comments.count} コメント", image_path(image.id) %>
+    </td>
+   </tr>
+  <% end %>
+ </tbody>
+</table>
+
