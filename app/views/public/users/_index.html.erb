@@ -1,0 +1,17 @@
+<% if users.present? %>
+  <div class="row">
+    <% users.each do |user| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm text-center">
+          <div class="card-body">
+            <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle mb-3" %>
+            <h5 class="card-title"><%= user.name %></h5>
+            <%= link_to "プロフィールを見る", user_path(user), class: "btn btn-outline-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>該当するユーザーが見つかりませんでした。</p>
+<% end %>

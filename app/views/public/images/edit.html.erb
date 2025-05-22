@@ -1,29 +1,52 @@
 <% if @image.errors.any? %>
- <%= @image.errors.count %>件のエラーが発生しました
- <ul>
-  <% @image.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
- </ul>
+  <div class="alert alert-danger">
+    <strong><%= @image.errors.count %>件のエラーがあります：</strong>
+    <ul>
+      <% @image.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
-<h1>編集</h1>
-<%= form_with model: @image do |f| %>
-   <h4>Photo</h4>
-   <%= f.file_field :image, accept: "image/*" %>
-   <h4>Title</h4>
-   <%= f.text_field :title %>
-   <h4>Opinion</h4>
-   <%= f.text_area :body %>
+<h1>投稿の編集</h1>
 
-   <div class="field">
-   <%= f.label :is_published, "公開する" %>
-   <%= f.check_box :is_published, {}, true, false %>
-   </div>
-
-   <%= f.submit 'Update Image' %>
-
-   <%= link_to "Show", image_path(@image.id) %>|<%= link_to "Back", images_path %>
+<% if @image.errors.any? %>
+  <div class="alert alert-danger">
+    <strong><%= @image.errors.count %>件のエラーがあります：</strong>
+    <ul>
+      <% @image.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
+<%= form_with model: @image, local: true, html: { multipart: true } do |f| %>
+  <div class="form-group">
+    <h4>Photo</h4>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
 
+  <div class="form-group">
+    <h4>Title</h4>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <h4>Opinion</h4>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+
+  <div class="form-check">
+   <%= f.label :is_published, "公開する", class: "form-check-label" %>
+   <%= f.check_box :is_published, { class: "form-check-input" }, true, false %>
+  </div>
+
+
+  <div class="mt-3">
+    <%= f.submit '変更を保存', class: "btn btn-primary" %>
+    <%= link_to "投稿に戻る", image_path(@image), class: "btn btn-secondary ml-2" %>
+    <%= link_to "一覧に戻る", images_path, class: "btn btn-light ml-2" %>
+  </div>
+<% end %>

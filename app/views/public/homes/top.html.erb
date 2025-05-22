@@ -1,8 +1,10 @@
-<h1>Welcome to child_diary!</h1>
-<p>You can record your child's growth.</p>
+<div class="container text-center mt-5">
+  <h1 class="display-4 mb-3">Welcome to Child Diary!</h1>
+  <p class="lead mb-4">お子さまの成長を記録・共有できるコミュニティアプリです。</p>
 
-<%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, method: :post %>
-
-<%= link_to "ログイン",new_user_session_path %>
-
-<%= link_to "新規登録",new_user_registration_path %>
+  <div class="d-flex justify-content-center mb-3 flex-wrap gap-2">
+    <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, method: :post, class: "btn btn-outline-info mx-2 mb-2" %>
+    <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary mx-2 mb-2" %>
+    <%= link_to "新規登録", new_user_registration_path, class: "btn btn-success mx-2 mb-2" %>
+  </div>
+</div>

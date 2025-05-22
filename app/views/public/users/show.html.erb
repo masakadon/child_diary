@@ -1,23 +1,43 @@
-<%= render 'public/images/list', user: @user,image: @image %>
+<%= render 'public/images/list', user: @user %>
 
-<h2>投稿一覧</h2>
- <table class="table">
-  <thead>
-   <tr>
-    <th></th>
-    <th>タイトル</th>
-    <th>コメント数</th>
-    <th colespan="3"></th>
-   </tr>
-  </thead>
+<% if user_signed_in? && @user == current_user %>
+ <div class="my-4 p-4 bg-light rounded shadow-sm">
+  <h2 class="mb-3">新規投稿</h2>
+  <%= form_with model: @image, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :title, "タイトル" %>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
 
-  <tbody>
-   <% @images.each do |image| %>
-   <tr>
-    <td><%= image_tag image.image.variant(resize_to_limit: [100, 100]).processed if image.image.attached? %></td>
-    <td><%= link_to image.title, image_path(image.id) %></td>
-    <td><%= link_to "#{image.post_comments.count} コメント", image_path(image.id) %></td>
-   </tr>
-   <% end %>
-  </tbody>
- </table>
+    <div class="form-group">
+      <%= f.label :image, "写真" %>
+      <%= f.file_field :image, accept: "image/*", class: "form-control-file" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :body, "コメント" %>
+      <%= f.text_area :body, class: "form-control", rows: 4 %>
+    </div>
+
+    <%= f.submit '投稿', class: "btn btn-primary mt-2" %>
+  <% end %>
+ </div>
+<% end %>
+
+<h2 class="mt-5">投稿一覧</h2>
+
+<div class="row">
+  <% @images.each do |image| %>
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <% if image.image.attached? %>
+          <%= image_tag image.image.variant(resize_to_limit: [600, 300]).processed, class: "card-img-top" %>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to image.title, image_path(image.id) %></h5>
+          <p class="card-text text-muted"><%= pluralize(image.post_comments.count, "コメント") %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

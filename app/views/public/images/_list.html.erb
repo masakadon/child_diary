@@ -1,33 +1,30 @@
-<h2>会員情報</h2>
-<%= image_tag user.get_profile_image(100,100) %>
-<table class="table">
- <tbody>
-  <tr>
-   <th>name</th>
-   <th><%= user.name %></th>
-  </tr>
+<h2 class="mt-4">会員情報</h2>
 
-  <tr>
-   <th>introduction</th>
-   <th><%= user.introduction %></th>
-  </tr>
- </tbody>
+<div class="mb-3">
+  <%= image_tag user.get_profile_image(100,100), class: "rounded-circle border" %>
+</div>
+
+<table class="table table-bordered w-50">
+  <tbody>
+    <tr>
+      <th>名前</th>
+      <td><%= user.name %></td>
+    </tr>
+    <tr>
+      <th>自己紹介</th>
+      <td><%= user.introduction.presence || "未設定" %></td>
+    </tr>
+  </tbody>
 </table>
 
- <% if !user.guest_user? && user == current_user %>
-  <p><%= link_to "プロフィール編集", edit_user_path(user) %></p>
- <% end %>
- <% if @user == current_user %>
-  <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
- <% end %>
-
-<h2>新規投稿</h2>
-<%= form_with model: image do |f| %>
-  <h4>Title</h4>
-  <%= f.text_field :title %>
-  <h4>Photo</h4>
-  <%= f.file_field :image, accept: "image/*" %>
-  <h4>Opinion</h4>
-  <%= f.text_area :body %>
-  <%= f.submit '投稿' %>
+<% if !user.guest_user? && user == current_user %>
+  <p><%= link_to "プロフィール編集", edit_user_path(user), class: "btn btn-outline-primary" %></p>
 <% end %>
+
+<% if @user == current_user %>
+  <%= link_to "退会", user_path(current_user.id),
+              method: :delete,
+              data: { confirm: "本当に退会しますか？" },
+              class: "btn btn-outline-danger mt-2" %>
+<% end %>
+

@@ -13,38 +13,55 @@
 
   <body>
     <header>
-     <% if user_signed_in? %>
-       <li>
-         <%= link_to "マイページ", user_path(current_user.id) %>
-       </li>
-       <li>
-         <%= link_to "画像一覧", images_path %>
-       <li>
-         <%= link_to "ユーザ一覧",users_path %>
-       <li>
-         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-       </li>
-       
-     <% else %>
-       <li>
-         <%= link_to "Home", root_path %>
-       </li>
-       <li>
-         <%= link_to "About", about_path %>
-       </li>
-       <li>
-         <%= link_to "Sign up", new_user_registration_path %>
-       </li>
-       <li>
-         <%= link_to "Log in", new_user_session_path %>
-       </li>
-     <% end %>
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+       <a class="navbar-brand" href="/">Child_Diary</a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+       <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+       <ul class="navbar-nav ml-auto">
+        <% if user_signed_in? %>
+         <li class="nav-item">
+          <%= link_to "マイページ", user_path(current_user.id), class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "画像一覧", images_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "ユーザ一覧",users_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+         </li> 
+        <% else %>
+         <li class="nav-item">
+          <%= link_to "Home", root_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "About", about_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "Log in", new_user_session_path, class: "nav-link" %>
+         </li>
+        <% end %>
+       </ul>
+      </div>
+      </div>
+     </nav>
     </header>
     
-    <main>
+    <main class="container mt-4">
      <%= flash[:notice] %>
-      <%= yield %>
+      <div class="alert alert-success">
+       <%= flash[:notice] %>
+      </div>
+     <%= yield %>
     </main>
-    
   </body>
 </html>

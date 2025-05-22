@@ -3,16 +3,18 @@
  </div>
 <%= render 'public/images/list', user: @user,image: @image %>
 
-<h2>会員一覧</h2>
-<table class="table">
- 
- <tbody>
+<h2 class="mt-5 mb-4">会員一覧</h2>
+
+<div class="row">
   <% @users.each do |user| %>
-  <tr>
-   <td><%= image_tag user.get_profile_image(100,100) %></td>
-   <td><%= user.name %></td>
-   <td><%= link_to "Show", user_path(user) %></td>
-  </tr>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm text-center">
+        <div class="card-body">
+          <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle mb-3" %>
+          <h5 class="card-title"><%= user.name %></h5>
+          <%= link_to "プロフィールを見る", user_path(user), class: "btn btn-outline-primary btn-sm" %>
+        </div>
+      </div>
+    </div>
   <% end %>
- </tbody>
-</table>
+</div>
