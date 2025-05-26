@@ -3,8 +3,14 @@ class Public::PostCommentsController < ApplicationController
     image = Image.find(params[:image_id])
     comment = current_user.post_comments.build(post_comment_params)
     comment.image_id = image.id
-    comment.save
-    redirect_to image_path(image)
+
+    if @comment.save
+     redirect_to image_path(@image), notice: "コメントを投稿しました。"
+    else
+     @post_comment = @image.post_comments.includes(:user)
+     flash.now[:alert] = "コメントを入力して下さい。"
+     render 'public/images/show'
+    end
   end
   
   def destroy

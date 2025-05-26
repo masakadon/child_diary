@@ -23,7 +23,19 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
        <ul class="navbar-nav ml-auto">
-        <% if user_signed_in? %>
+        
+        <% if admin_signed_in? %>
+         <li class="nav-item">
+          <%= link_to "管理TOP", admin_root_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "コメント管理", admin_comments_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item">
+          <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-link text-danger" %>
+         </li>
+
+        <% elsif user_signed_in? %>
          <li class="nav-item">
           <%= link_to "マイページ", user_path(current_user.id), class: "nav-link" %>
          </li>
