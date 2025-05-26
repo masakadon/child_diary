@@ -24,7 +24,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
        <ul class="navbar-nav ml-auto">
         
-        <% if admin_signed_in? %>
+        <% if admin_user_signed_in? %>
          <li class="nav-item">
           <%= link_to "管理TOP", admin_root_path, class: "nav-link" %>
          </li>
