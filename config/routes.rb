@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     post "users/guest_sign_in", to: "public/sessions#guest_sign_in"
   end
 
-  devise_for :admin_user, skip: [:registrations, :passwords], controllers: {
+  devise_for :admin_user, path: 'admin', skip: [:registrations, :passwords], controllers: {
     sessions: 'admin/sessions'
   }
 
