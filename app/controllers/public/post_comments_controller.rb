@@ -8,9 +8,8 @@ class Public::PostCommentsController < ApplicationController
     if @comment.save
      redirect_to image_path(@image), notice: "コメントを投稿しました。"
     else
-     @post_comment = @image.post_comments.includes(:user)
      flash.now[:alert] = "コメントを入力して下さい。"
-     render 'public/images/show'
+     redirect_to image_path(@image)
     end
   end
   

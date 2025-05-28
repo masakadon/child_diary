@@ -24,18 +24,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
        <ul class="navbar-nav ml-auto">
         
-        <% if admin_user_signed_in? %>
-         <li class="nav-item">
-          <%= link_to "管理TOP", admin_root_path, class: "nav-link" %>
-         </li>
-         <li class="nav-item">
-          <%= link_to "コメント管理", admin_comments_path, class: "nav-link" %>
-         </li>
-         <li class="nav-item">
-          <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-link text-danger" %>
-         </li>
-
-        <% elsif user_signed_in? %>
+        <% if user_signed_in? %>
          <li class="nav-item">
           <%= link_to "マイページ", user_path(current_user.id), class: "nav-link" %>
          </li>
@@ -69,11 +58,15 @@
     </header>
     
     <main class="container mt-4">
-     <% if flash[:notice].present? %>
-      <div class="alert alert-success">
-       <%= flash[:notice] %>
+    <% flash.each do |key, message| %>
+      <div class="alert alert-<%= key == "notice" ? "success" : "danger" %> alert-dismissible fade show" role="alert">
+        <%= message %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-     <% end %>
+    <% end %>
+
      <%= yield %>
     </main>
   </body>
