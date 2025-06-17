@@ -1,0 +1,28 @@
+<h2>コメント一覧</h2>
+
+<table>
+ <thead>
+  <tr>
+   <th>ID</th>
+   <th>コメント内容</th>
+   <th>投稿者</th>
+   <th>投稿画像</th>
+   <th>投稿日</th>
+   <th>操作</th>
+  </tr>
+ </thead>
+ <tbody>
+  <% @comments.each do |comment| %>
+   <tr>
+    <td><%= comment.id %></td>
+    <td><%= comment.comment %></td>
+    <td><%= comment.user.name %></td>
+    <td><%= link_to "画像を見る", image_path(comment.image) if comment.image %></td>
+    <td><%= l(comment.created_at, format: :short) %></td>
+    <td>
+     <%= link_to "削除", admin_comment_path(comment), method: :delete, date:{ confirm: "本当に削除しますか？" } %>
+    </td>
+   </tr>
+  <% end %>
+ </tbody>
+</table>

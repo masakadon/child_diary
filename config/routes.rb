@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'comments/index'
+    get 'comments/destroy'
+  end
   devise_scope :user do
     post "users/guest_sign_in", to: "public/sessions#guest_sign_in"
   end
@@ -10,6 +14,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'users/index'
     resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :comments, only: [:index, :destroy]
   end
   
 
