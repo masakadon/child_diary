@@ -28,3 +28,11 @@
               class: "btn btn-outline-danger mt-2" %>
 <% end %>
 
+<% if @user == current_user %>
+ <div class="group-buttons" style="display: flex; gap: 12px; margin-top: 20px; margin-bottom: 20px">
+  <%= link_to "グループを作成", new_group_path, class: "btn btn-primary" %>
+  <%= link_to "グループ一覧", groups_path, class: "btn btn-secondary" %>
+ </div>
+<% end %>
+
+

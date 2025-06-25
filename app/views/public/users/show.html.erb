@@ -1,6 +1,7 @@
 <%= render 'public/images/list', user: @user %>
 
 <% if user_signed_in? && @user == current_user %>
+ 
  <div class="my-4 p-4 bg-light rounded shadow-sm">
   <h2 class="mb-3">新規投稿</h2>
   <%= form_with model: @image, local: true do |f| %>
@@ -31,7 +32,7 @@
     <div class="col-md-6 mb-4">
       <div class="card shadow-sm h-100">
         <% if image.image.attached? %>
-          <%= image_tag image.image.variant(resize_to_limit: [600, 300]).processed, class: "card-img-top" %>
+          <%= image_tag image.image.variant(resize_to_limit: [100, 100]).processed, class: "card-img-top" %>
         <% end %>
         <div class="card-body">
           <h5 class="card-title"><%= link_to image.title, image_path(image.id) %></h5>

@@ -1,0 +1,10 @@
+
+<div class="user-info-card p-3 mb-3 border rounded">
+  <p><strong>名前:</strong> <%= user.name %></p>
+  <% if user.profile_image.attached? %>
+    <%= image_tag user.profile_image, size: "100x100", class: "rounded-circle" %>
+  <% else %>
+    <%= image_tag "no_image.jpg", size: "100x100", class: "rounded-circle" %>
+  <% end %>
+  <p><strong>自己紹介:</strong> <%= user.introduction %></p>
+</div>

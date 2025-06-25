@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'notices/new'
+  get 'notices/create'
+  get 'notices/done'
+  namespace :admin do
+    get 'groups/index'
+    get 'groups/show'
+    get 'groups/destroy'
+  end
   namespace :admin do
     get 'comments/index'
     get 'comments/destroy'
@@ -15,6 +23,7 @@ Rails.application.routes.draw do
     get 'users/index'
     resources :users, only: [:index, :show, :edit, :update, :destroy]
     resources :comments, only: [:index, :destroy]
+    resources :groups, only: [:index, :destroy]
   end
   
 
@@ -30,6 +39,12 @@ Rails.application.routes.draw do
       resources :post_comments, only: [:create, :destroy]
     end
     resources :users, only: [:show, :index, :edit, :update, :destroy]
+
+    resources :groups do
+      resource :group_users, only: [:create, :destroy]
+      resources :notices, only: [:new, :create]
+      get "notices" => "notices#sent"
+    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

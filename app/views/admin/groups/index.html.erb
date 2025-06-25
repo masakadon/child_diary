@@ -1,0 +1,23 @@
+<h2>グループ一覧</h2>
+<table>
+  <thead>
+    <tr>
+      <th>グループ名</th>
+      <th>作成者</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= group.name %></td>
+        <td><%= group.user.name if group.user %></td>
+        <td>
+          <%= link_to '削除', admin_group_path(group), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
