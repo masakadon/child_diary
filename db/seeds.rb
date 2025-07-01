@@ -41,7 +41,16 @@ Image.find_or_create_by!(title: "ShoreditchBar") do |image|
   image.user = lucas
 end
 
-Admin.create!(
-  email: 'bosato@icloud.com',
-  password: 'bosato'
-)
+10.times do |i|
+  Event.create!(
+    title: "サンプルイベント#{i+1}",
+    start: Time.zone.now + i.days,
+    end: Time.zone.now + i.days + 1.hour
+  )
+end
+
+
+Admin.find_or_create_by!(email: 'bosato@icloud.com') do |admin|
+  admin.password = 'bosato'
+end
+

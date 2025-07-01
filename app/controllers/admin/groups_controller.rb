@@ -1,7 +1,7 @@
-
+module AdminPanel
  class Admin::GroupsController < ApplicationController
 
-  before_action :authenticate_admin_user!
+  before_action :authenticate_admin!
   before_action :set_group, only: [:destroy]
 
   def index
@@ -19,3 +19,4 @@
    @group = Group.find(params[:id])
   end
  end
+end

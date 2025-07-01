@@ -45,6 +45,17 @@ class Public::UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def calendar
+    if current_user.nil?
+      head :unauthorized and return
+    end
+
+    @events = current_user.images
+    respond_to do |format|
+      format.json { render 'calendar' }
+    end
+  end
+
   private
   
   def ensure_guest_user
