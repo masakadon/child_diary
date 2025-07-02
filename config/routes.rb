@@ -36,22 +36,27 @@ Rails.application.routes.draw do
     devise_for :users, controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
-    get 'users/calendar', to: 'users#calendar', defaults: { format: 'json' }
   }
+    resources :users, only: [:show, :index, :edit, :update, :destroy]
+     collection do
+      get 'calendar', to: 'users#calendar', defaults: { format: 'json' }
+     end
+    end
 
     root to: 'homes#top'
     get "/home/about" => "homes#about", as: "about"
     get '/search', to: 'searches#search'
+
     resources :images, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
       resources :post_comments, only: [:create, :destroy]
     end
-    resources :users, only: [:show, :index, :edit, :update, :destroy]
+
     resources :events, only: [:index]
+    
     resources :groups do
       resource :group_users, only: [:create, :destroy]
       resources :notices, only: [:new, :create]
       get "notices" => "notices#sent"
-
     end
   end
 

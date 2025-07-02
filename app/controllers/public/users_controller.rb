@@ -50,7 +50,8 @@ class Public::UsersController < ApplicationController
       head :unauthorized and return
     end
 
-    @events = current_user.images
+    @events = current_user.events
+    @images = current_user.images
     respond_to do |format|
       format.json { render 'calendar' }
     end

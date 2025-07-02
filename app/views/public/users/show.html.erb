@@ -1,7 +1,10 @@
 <%= render 'public/images/list', user: @user %>
 
 <% if user_signed_in? && @user == current_user %>
- 
+<div id="calendar"></div>
+<%= javascript_pack_tag 'calendar' %>
+
+
  <div class="my-4 p-4 bg-light rounded shadow-sm">
   <h2 class="mb-3">新規投稿</h2>
   <%= form_with model: @image, local: true do |f| %>
