@@ -1,10 +1,23 @@
 <%= render 'public/images/list', user: @user %>
 
 <% if user_signed_in? && @user == current_user %>
-<div id="calendar"></div>
-<%= javascript_pack_tag 'calendar' %>
+ <%= javascript_pack_tag 'calendar' %> 
+ <div id="calendar" class="my-4"></div>
 
-
+ <div id="event-form" style="display: none;" class ="card p-3 mt-4">
+  <h5>新しい予定を作成</h5>
+   <%= form_with url: events_path, method: :post, local: true do |f| %>
+     <div class="form-group">
+       <%= f.label :title, "タイトル" %>
+       <%= f.text_field :title, class: "form-control" %>
+     </div>
+     <div class="form-group">
+       <%= f.label :start, "日付" %>
+       <%= f.date_field :start, id: "event-start-date", class: "form-control" %>
+     </div>
+     <%= f.submit "作成", class: "btn btn-primary mt-2" %>
+   <% end %>
+ </div>
  <div class="my-4 p-4 bg-light rounded shadow-sm">
   <h2 class="mb-3">新規投稿</h2>
   <%= form_with model: @image, local: true do |f| %>
@@ -26,7 +39,6 @@
     <%= f.submit '投稿', class: "btn btn-primary mt-2" %>
   <% end %>
  </div>
- <div id="calendar" class="my-4"></div>
 <% end %>
 
 <h2 class="mt-5">投稿一覧</h2>

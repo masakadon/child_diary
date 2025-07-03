@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-    resources :users, only: [:show, :index, :edit, :update, :destroy]
+    resources :users, only: [:show, :index, :edit, :update, :destroy] do
      collection do
       get 'calendar', to: 'users#calendar', defaults: { format: 'json' }
      end
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
       resources :post_comments, only: [:create, :destroy]
     end
 
-    resources :events, only: [:index]
+    resources :events, only: [:index, :create, :update]
     
     resources :groups do
       resource :group_users, only: [:create, :destroy]

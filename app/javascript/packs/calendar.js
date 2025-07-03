@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     events: '/public/users/calendar',
     editable: true,
 
+    dateClick: function(info) {
+      alert('${info.dateStr}がクリックされました');
+    },
+    
     eventDrop: function(info) {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       fetch(`/events/${info.event.id}`, {
@@ -47,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
           calendar.changeView('dayGridMonth');
       }
-   },
+    },
   });
 
   calendar.render();
