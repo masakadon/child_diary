@@ -1,0 +1,22 @@
+<h2>予定詳細</h2>
+<p><strong>タイトル:</strong> <%= @event.title %></p>
+<p><strong>開始日:</strong> <%= @event.start.strftime('%Y-%m-%d') if @event.start %></p>
+
+<%= link_to 'マイページへ戻る', user_path(current_user), class: 'btn btn-secondary my-3' %> |
+<%= link_to '予定を削除', event_path(@event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger my-3' %>
+
+<h3>予定を編集する</h3>
+
+<%= form_with model: @event, url: event_path(@event), method: :patch, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :start, "開始日" %>
+    <%= f.date_field :start, class: "form-control" %>
+  </div>
+
+  <%= f.submit '更新する', class: "btn btn-primary mt-2" %>
+<% end %>

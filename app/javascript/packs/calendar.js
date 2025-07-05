@@ -3,37 +3,59 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from "@fullcalendar/list"; 
 import interactionPlugin from "@fullcalendar/interaction"; 
 
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
+document.addEventListener('turbolinks:load', function() {
+  var calendarEl = document.getElementById('calendar');  
+  // idがcalendarというhtmlを指定してcalendarElという変数に代入している
   if (!calendarEl) return;
 
   var calendar = new Calendar(calendarEl, {
     plugins: [dayGridPlugin, listPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     locale: "ja", 
-    events: '/public/users/calendar',
+    events: '/users/calendar',
+    // /users/calendarのパスのルーティングを呼び出す
+    // /users/calendar(.:format)のパスの場合、public/users(コントローラー)#calendar(アクション)が呼び出される
     editable: true,
 
     dateClick: function(info) {
-      alert('${info.dateStr}がクリックされました');
+      const form = document.getElementById('event-form');
+      const dateField = document.getElementById('event-start-date');
+
+      if (form && dateField) {
+        form.style.display = 'block';
+        dateField.value = info.dateStr;
+        window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
+      }
     },
     
     eventDrop: function(info) {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      fetch(`/events/${info.event.id}`, {
+      const fullId = info.event.id;
+
+      let url, body;
+
+      if (fullId.startsWith('event-')) {
+        const id = fullId.replace('event-', '');
+        url = `/events/${id}`;
+        body = { event: { date: info.event.startStr } };
+      } else if (fullId.startsWith('image-')) {
+        const id = fullId.replace('image-', '');
+        url = `/images/${id}`;
+        body = { image: { created_at: info.event.startStr } };
+      } else {
+        return; // 無効なID
+      }
+
+      fetch(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-Token': csrfToken
         },
-        body: JSON.stringify({
-          event: {
-            date: info.event.startStr
-          }
-        })
+        body: JSON.stringify(body)
       }).then(response => {
         if (!response.ok) {
-          alert('更新に失敗しました');
+          alert('移動に失敗しました');
         }
       });
     },
@@ -56,3 +78,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
   calendar.render();
 });
+
+// var calendar = new Calendar(calendarEl, { 11行目のvar calendarを読み込んでいる

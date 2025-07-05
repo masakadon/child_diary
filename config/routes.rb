@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'notices/new'
   get 'notices/create'
   get 'notices/done'
-  get 'users/calendar', to: 'users#calendar', defaults: { format: 'json' }
+  
 
 
   namespace :admin do
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   }
     resources :users, only: [:show, :index, :edit, :update, :destroy] do
      collection do
-      get 'calendar', to: 'users#calendar', defaults: { format: 'json' }
+       get 'calendar'
      end
     end
 
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
       resources :post_comments, only: [:create, :destroy]
     end
 
-    resources :events, only: [:index, :create, :update]
+    resources :events, only: [:index, :show, :create, :update, :destroy]
     
     resources :groups do
       resource :group_users, only: [:create, :destroy]

@@ -12,6 +12,7 @@ class Public::UsersController < ApplicationController
     end
     @images = @user.images
     @image = Image.new
+    @event = Event.new
   end
 
   def index
@@ -46,15 +47,15 @@ class Public::UsersController < ApplicationController
   end
 
   def calendar
-    if current_user.nil?
-      head :unauthorized and return
-    end
+    # if current_user.nil?
+    #   head :unauthorized and return
+    # end
 
-    @events = current_user.events
-    @images = current_user.images
-    respond_to do |format|
-      format.json { render 'calendar' }
-    end
+   @events = Event.where(user_id: current_user.id)
+   @images = Image.where(user_id: current_user.id)
+   respond_to do |format|
+    format.json
+   end
   end
 
   private
