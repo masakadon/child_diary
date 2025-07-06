@@ -30,32 +30,27 @@ document.addEventListener('turbolinks:load', function() {
     
     eventDrop: function(info) {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      const fullId = info.event.id;
-
-      let url, body;
-
-      if (fullId.startsWith('event-')) {
-        const id = fullId.replace('event-', '');
-        url = `/events/${id}`;
-        body = { event: { date: info.event.startStr } };
-      } else if (fullId.startsWith('image-')) {
-        const id = fullId.replace('image-', '');
-        url = `/images/${id}`;
-        body = { image: { created_at: info.event.startStr } };
-      } else {
-        return; // 無効なID
-      }
-
-      fetch(url, {
+      fetch(`/events/${info.event.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-Token': csrfToken
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+          event: {
+            start: info.event.startStr
+          }
+        })
       }).then(response => {
-        if (!response.ok) {
-          alert('移動に失敗しました');
+        if (response.ok) {
+          var notice_message = document.getElementById("alert-message");
+          notice_message.innerHTML="<div class='alert alert-success alert-dismissible fade show' role='alert'>"+
+         "予定を更新しました"+
+          "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+
+          "<span aria-hidden='true'>&times;</span>"+
+           "</button></div>"
+        } else{
+          alert('更新に失敗しました');
         }
       });
     },

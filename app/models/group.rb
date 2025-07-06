@@ -3,6 +3,10 @@ class Group < ApplicationRecord
   belongs_to :owner, class_name: 'User'
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users
+  has_many :group_memberships, dependent: :destroy
+  has_many :members, through: :group_memberships, source: :user
+  # has_many :group_requests
+  # has_many :requesting_users, through: :group_requests, source: :user
 
   validates :name, presence: true
   validates :introduction, presence: true

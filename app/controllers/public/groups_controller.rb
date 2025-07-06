@@ -37,6 +37,13 @@ class Public::GroupsController < ApplicationController
     end
   end
 
+  def requests
+    @group = Group.find(params[:id])
+    unless @group.owner_id == current_user.id
+      redirect_to groups_path, alert: "権限がありません"
+    end
+  end
+
   private
 
   def group_params

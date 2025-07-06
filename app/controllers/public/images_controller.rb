@@ -17,12 +17,6 @@ class Public::ImagesController < ApplicationController
   end
   
   def index
-    # @image = Image.find(params[:id])
-    # # if user_signed_in?
-    # #   @images = Image.where(public: true).or(Image.where(user: current_user))
-    # # else
-    # #   @images = Image.where(public: true)
-    # end
     @images = Image.all
     @user = current_user 
     @image = Image.new

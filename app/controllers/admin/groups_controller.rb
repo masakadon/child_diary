@@ -1,6 +1,8 @@
 module AdminPanel
  class Admin::GroupsController < ApplicationController
 
+  layout 'admin'
+  
   before_action :authenticate_admin!
   before_action :set_group, only: [:destroy]
 
@@ -9,7 +11,8 @@ module AdminPanel
   end
 
   def destroy
-    group.destroy
+    @group = Group.find(params[:id])
+    @group.destroy
     redirect_to admin_groups_path, notice: "グループを削除しました"
   end
 

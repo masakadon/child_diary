@@ -6,13 +6,13 @@ Rails.application.routes.draw do
   
 
 
-  namespace :admin do
-    get 'comments/index'
-    get 'comments/destroy'
-    get 'groups/index'
-    get 'groups/show'
-    get 'groups/destroy'
-  end
+  # namespace :admin do
+  #   get 'comments/index'
+  #   get 'comments/destroy'
+  #   get 'groups/index'
+  #   get 'groups/show'
+  #   get 'groups/destroy'
+  # end
 
   devise_scope :user do
     post "users/guest_sign_in", to: "public/sessions#guest_sign_in"
@@ -25,10 +25,11 @@ Rails.application.routes.draw do
   namespace :admin_panel do
     resources :groups, only: [:index, :destroy]
   end
+
   namespace :admin do
-    get 'users/index'
     resources :users, only: [:index, :show, :edit, :update, :destroy]
     resources :comments, only: [:index, :destroy]
+    resources :groups, only: [:index, :destroy]
   end
   
 
@@ -55,9 +56,12 @@ Rails.application.routes.draw do
     
     resources :groups do
       resource :group_users, only: [:create, :destroy]
+      resources :group_memberships, only: [:create, :update, :destroy]
+      get :requests, on: :member
       resources :notices, only: [:new, :create]
       get "notices" => "notices#sent"
     end
+
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

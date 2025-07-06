@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_07_03_134501) do
+ActiveRecord::Schema.define(version: 2025_07_06_141806) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -61,6 +61,27 @@ ActiveRecord::Schema.define(version: 2025_07_03_134501) do
     t.integer "user_id"
   end
 
+  create_table "group_memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "group_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_group_memberships_on_group_id"
+    t.index ["user_id", "group_id"], name: "index_group_memberships_on_user_id_and_group_id", unique: true
+    t.index ["user_id"], name: "index_group_memberships_on_user_id"
+  end
+
+  create_table "group_requests", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "group_id", null: false
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_group_requests_on_group_id"
+    t.index ["user_id"], name: "index_group_requests_on_user_id"
+  end
+
   create_table "group_users", force: :cascade do |t|
     t.integer "user_id"
     t.integer "group_id"
@@ -83,6 +104,7 @@ ActiveRecord::Schema.define(version: 2025_07_03_134501) do
     t.string "title"
     t.text "body"
     t.boolean "is_published"
+    t.datetime "date"
   end
 
   create_table "post_comments", force: :cascade do |t|
@@ -119,4 +141,8 @@ ActiveRecord::Schema.define(version: 2025_07_03_134501) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "group_memberships", "groups"
+  add_foreign_key "group_memberships", "users"
+  add_foreign_key "group_requests", "groups"
+  add_foreign_key "group_requests", "users"
 end

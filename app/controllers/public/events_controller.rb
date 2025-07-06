@@ -12,7 +12,7 @@ class Public::EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
   if @event.update(event_params)
-    redirect_to user_path(current_user), notice: "予定を更新しました"
+    redirect_to user_path(current_user), notice: "予定を更新しました", status:303
   else
     render :show
   end
