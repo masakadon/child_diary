@@ -10,10 +10,6 @@ class User < ApplicationRecord
   has_many :group_users, dependent: :destroy
   has_many :group_memberships
   has_many :joined_groups, through: :group_memberships, source: :group
-  # has_many :group_requests
-  # has_many :requested_groups, through: :group_requests, source: :group
-  # has_many :posts, :dependent => :destroy
-  # has_many :comments, :dependent => :destroy
   has_one_attached :profile_image
 
 
