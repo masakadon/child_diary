@@ -116,12 +116,12 @@ ActiveRecord::Schema.define(version: 2025_07_06_141806) do
     t.integer "image_id"
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+  # create_table "posts", force: :cascade do |t|
+  #   t.string "title"
+  #   t.text "content"
+  #   t.datetime "created_at", precision: 6, null: false
+  #   t.datetime "updated_at", precision: 6, null: false
+  # end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
