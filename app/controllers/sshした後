@@ -1,3 +1,5 @@
+ ssh -i ~/.ssh/practice-aws.pem ec2-user@
+
 sshした後
 
 cd 自分のフォルダ
