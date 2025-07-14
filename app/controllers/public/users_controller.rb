@@ -10,7 +10,7 @@ class Public::UsersController < ApplicationController
       redirect_to users_path, alert: "このユーザーのプロフィールは非公開です。"
       return
     end
-    @images = @user.images
+    @images = @user.images.where(is_published: true)
     @image = Image.new
     @event = Event.new
   end

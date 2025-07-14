@@ -17,10 +17,19 @@ class Public::ImagesController < ApplicationController
   end
   
   def index
-    @images = Image.all
     @user = current_user 
     @image = Image.new
     @post_comment = PostComment.new 
+    
+    if user_signed_in?
+      @images = Image.joins(:user)
+                     .where("images.is_published = ? AND users.is_public = ?", true, true)
+                     .or(Image.where(user_id: current_user.id))
+                     .distinct
+    else
+      @images = Image.joins(:user)
+                     .where("images.is_published = ? AND users.is_public = ?", true, true)
+    end
   end
 
   def show
